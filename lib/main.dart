@@ -116,23 +116,29 @@ class _MyHomePageState extends State<MyHomePage> {
       title = parsedJson['Title'];
       released = parsedJson['Released'];
       genre = parsedJson['Genre'];
-      poster = parsedJson['Poster'];
       plot = parsedJson['Plot'];
-      var ratings_Source = parsedJson['Ratings'][0]['Source'];
-      var ratings_Value = parsedJson['Ratings'][0]['Value'];
-      setState(() {
-        output1 =
-            ' Title: $title.\n Released: $released\n Genre: $genre \n Rarings: $ratings_Source: $ratings_Value \n Story: $plot ';
 
-        Fluttertoast.showToast(
-            msg: "Movie Found",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.TOP,
-            timeInSecForIosWeb: 2,
-            fontSize: 16.0);
-      });
-      print(response.statusCode);
+      if (title != null) {
+        poster = parsedJson['Poster'];
+        var ratings_Source = parsedJson['Ratings'][0]['Source'];
+        var ratings_Value = parsedJson['Ratings'][0]['Value'];
+        setState(() {
+          output1 =
+              ' Title: $title.\n Released: $released\n Genre: $genre \n Rarings: $ratings_Source: $ratings_Value \n Story: $plot ';
 
+          Fluttertoast.showToast(
+              msg: "Movie Found",
+              toastLength: Toast.LENGTH_SHORT,
+              gravity: ToastGravity.TOP,
+              timeInSecForIosWeb: 2,
+              fontSize: 16.0);
+        });
+      } else {
+        setState(() {
+          poster = 'https://cdn-icons-png.flaticon.com/512/5698/5698690.png';
+          output1 = "Wrong Movie name please try again";
+        });
+      }
       progress.dismiss();
     } else {
       setState(() {
